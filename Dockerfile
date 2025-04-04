@@ -15,8 +15,8 @@ FROM node:20-alpine
 WORKDIR /app
 COPY --from=builder /app .  
 
-# Exposer le port
+# Exposer le port 3000, comme utilisé dans server.js
 EXPOSE 3000
 
-# Lancer le serveur Express au lieu de Next.js directement
-CMD ["node", "server.js"]
+# Lancer l'application Next.js avec Express
+CMD ["npm", "run", "start"]

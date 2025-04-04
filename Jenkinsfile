@@ -7,13 +7,19 @@ pipeline {
     }
     environment {
         CI_REGISTRY_IMAGE = "hichem/nextjs-app"
+        HOME = "/var/jenkins_home" // Définit le répertoire home correct
     }
     stages {
         stage('Build') {
             steps {
                 echo 'Building Docker image...'
-                sh 'docker build -t $CI_REGISTRY_IMAGE:latest .'
-                sh 'docker push $CI_REGISTRY_IMAGE:latest'
+                sh '''
+                    export HOME=/var/jenkins_home
+                    mkdir -p $HOME/.docker
+                    chmod 700 $HOME/.docker
+                    docker build -t $CI_REGISTRY_IMAGE:latest .
+                    docker push $CI_REGISTRY_IMAGE:latest
+                '''
             }
         }
         stage('Scan') {
@@ -25,9 +31,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
-                sh 'apk add --no-cache docker-compose'
-                sh 'docker-compose down || true'
-                sh 'docker-compose up -d'
+                sh '''
+                    apk add --update --no-cache docker-compose
+                    docker-compose down || true
+                    docker-compose up -d
+                '''
             }
         }
     }

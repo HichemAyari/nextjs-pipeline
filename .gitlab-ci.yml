@@ -1,26 +1,32 @@
-variables:
-  CI_REGISTRY_IMAGE: "hichem/nextjs-app"
+pipeline {
+    agent any
 
-stages:
-  - build
-  - scan
-  - deploy
+    environment {
+        CI_REGISTRY_IMAGE = "hichem/nextjs-app"
+    }
 
-build:
-  stage: build
-  script:
-    - docker build -t $CI_REGISTRY_IMAGE:latest .
-    - docker push $CI_REGISTRY_IMAGE:latest
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building Docker image...'
+                sh 'docker build -t $CI_REGISTRY_IMAGE:latest .'
+                sh 'docker push $CI_REGISTRY_IMAGE:latest'
+            }
+        }
 
-scan:
-  stage: scan
-  image: aquasec/trivy
-  script:
-    - trivy image $CI_REGISTRY_IMAGE:latest
+        stage('Scan') {
+            steps {
+                echo 'Scanning Docker image with Trivy...'
+                sh 'docker run --rm aquasec/trivy image $CI_REGISTRY_IMAGE:latest'
+            }
+        }
 
-deploy:
-  stage: deploy
-  script:
-    - echo "Déploiement en cours..."
-    - docker-compose down || true
-    - docker-compose up -d
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+                sh 'docker-compose down || true'
+                sh 'docker-compose up -d'
+            }
+        }
+    }
+}
