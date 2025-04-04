@@ -1,0 +1,26 @@
+variables:
+  CI_REGISTRY_IMAGE: "hichem/nextjs-app"
+
+stages:
+  - build
+  - scan
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:latest
+
+scan:
+  stage: scan
+  image: aquasec/trivy
+  script:
+    - trivy image $CI_REGISTRY_IMAGE:latest
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Déploiement en cours..."
+    - docker-compose down || true
+    - docker-compose up -d
