@@ -1,25 +1,25 @@
 {
   "private": true,
   "scripts": {
-    "dev": "node server.js", // Start the server in development mode (uses the 'server.js' file)
-    "build": "next build", // Build the Next.js app for production (compiles the app)
-    "start": "NODE_ENV=production node server.js" // Start the server in production mode (using environment variables for production setup)
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
-    "@babel/runtime": "^7.26.10", // Babel runtime for handling async/await and generator functions
-    "cross-spawn": "^7.0.5", // Used to spawn child processes in a cross-platform way
-    "dotenv": "^16.4.7", // Load environment variables from a .env file
-    "express": "^5.1.0", // Express framework for creating the custom server
-    "next": "latest", // Next.js framework for building React apps
-    "path-to-regexp": "^8.2.0", // Used for matching and parsing URL paths (might be related to your dynamic routes)
-    "prom-client": "^15.1.3", // Prometheus client for gathering metrics
-    "react": "^18.2.0", // React library for building UI components
-    "react-dom": "^18.2.0" // React DOM for rendering React components on the web
+    "@babel/runtime": "^7.26.10",
+    "cross-spawn": "^7.0.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "next": "latest",
+    "path-to-regexp": "^8.2.0",
+    "prom-client": "^15.1.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "20.10.8", // TypeScript definitions for Node.js
-    "@types/react": "18.2.47", // TypeScript definitions for React
-    "@types/react-dom": "18.2.18", // TypeScript definitions for React DOM
-    "typescript": "^5.3.3" // TypeScript language support
+    "@types/node": "20.10.8",
+    "@types/react": "18.2.47",
+    "@types/react-dom": "18.2.18",
+    "typescript": "^5.3.3"
   }
 }
