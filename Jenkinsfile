@@ -6,8 +6,8 @@ pipeline {
         }
     }
     environment {
-        CI_REGISTRY_IMAGE = "hichem/nextjs-app"
-        HOME = "/var/jenkins_home" // Définit le répertoire home correct
+        CI_REGISTRY_IMAGE = "hichemayari/projet-federateur"  // Mise à jour du nom du dépôt
+        HOME = "/var/jenkins_home"
     }
     stages {
         stage('Build') {
@@ -17,8 +17,8 @@ pipeline {
                     export HOME=/var/jenkins_home
                     mkdir -p $HOME/.docker
                     chmod 700 $HOME/.docker
-                    docker build -t $CI_REGISTRY_IMAGE:latest .
-                    docker push $CI_REGISTRY_IMAGE:latest
+                    docker build -t $CI_REGISTRY_IMAGE:latest .  // Utilisation du nouveau nom d'image
+                    docker push $CI_REGISTRY_IMAGE:latest  // Pousser l'image avec le bon nom
                 '''
             }
         }
